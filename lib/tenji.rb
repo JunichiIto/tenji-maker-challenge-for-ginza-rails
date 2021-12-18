@@ -10,7 +10,7 @@ class Tenji
   #
   # http://www.naiiv.net/braille/?tenji-sikumi
 
-  # 値は[列、行]で設定する
+  # 値は[行、列]で設定する
   INDEX_TABLE = {
     1 => [0, 0],
     2 => [1, 0],
@@ -29,7 +29,21 @@ class Tenji
 
   # 指定された番号を点(1)とする
   def on(number)
-    col, row = INDEX_TABLE[number]
-    @masu[col][row] = 1
+    row, col = INDEX_TABLE[number]
+    masu[row][col] = 1
+  end
+
+  def +(other)
+    other_masu = other.masu
+
+    masu.each_with_index do |row, row_index|
+      row.each_with_index do |col, col_index|
+        next if col.positive?
+
+        masu[row_index][col_index] = col + other_masu[row_index][col_index]
+      end
+    end
+
+    self
   end
 end

@@ -26,4 +26,15 @@ class TenjiTest < Minitest::Test
     @tenji.on(6)
     assert_equal [[1, 1], [1, 1], [1, 1]], @tenji.masu
   end
+
+  def test_merge
+    tenji_a = Tenji.new
+    tenji_b = Tenji.new
+    tenji_a.on(1)
+    tenji_a.on(3)
+    tenji_b.on(1)
+    tenji_b.on(4)
+    tenji = tenji_a + tenji_b
+    assert_equal [[1, 1], [0, 0], [1, 0]], tenji.masu
+  end
 end
