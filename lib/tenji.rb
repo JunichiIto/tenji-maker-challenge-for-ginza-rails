@@ -47,8 +47,11 @@ class Tenji
     self
   end
 
-  def reverse!
-    masu.reverse!
-    self
+  # 点字を一番下へ移動させる
+  def shift_bottom
+    while masu.last.all?(&:zero?)
+      last = masu.pop
+      masu.unshift(last)
+    end
   end
 end

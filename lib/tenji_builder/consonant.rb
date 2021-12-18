@@ -67,7 +67,7 @@ module TenjiBuilder
         tenji.on(4)
 
         if vowel
-          vowel.reverse!
+          vowel.shift_bottom
           tenji + vowel
         end
       end
@@ -76,7 +76,7 @@ module TenjiBuilder
     def w(vowel = nil)
       Tenji.new.tap do |tenji|
         if vowel
-          vowel.reverse!
+          vowel.shift_bottom
           tenji + vowel
         end
       end

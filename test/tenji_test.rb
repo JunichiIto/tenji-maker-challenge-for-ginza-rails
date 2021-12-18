@@ -38,11 +38,10 @@ class TenjiTest < Minitest::Test
     assert_equal [[1, 1], [0, 0], [1, 0]], tenji.masu
   end
 
-  def test_reverse
-    @tenji.on(1)
+  def test_shift_bottom
     @tenji.on(2)
     @tenji.on(4)
-    @tenji.reverse!
-    assert_equal [[0, 0], [1, 0], [1, 1]], @tenji.masu
+    @tenji.shift_bottom
+    assert_equal [[0, 0], [0, 1], [1, 0]], @tenji.masu
   end
 end
