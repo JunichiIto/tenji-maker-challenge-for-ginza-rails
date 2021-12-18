@@ -2,64 +2,87 @@
 
 module TenjiBuilder
   class Consonant
-    def k
+    def k(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(6)
+        tenji + vowel if vowel
       end
     end
 
-    def s
+    def s(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(5)
         tenji.on(6)
+
+        tenji + vowel if vowel
       end
     end
 
-    def t
+    def t(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(3)
         tenji.on(5)
+
+        tenji + vowel if vowel
       end
     end
 
-    def n
+    def n(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(3)
+
+        tenji + vowel if vowel
       end
     end
 
-    def h
+    def h(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(3)
         tenji.on(6)
+
+        tenji + vowel if vowel
       end
     end
 
-    def m
+    def m(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(3)
         tenji.on(5)
         tenji.on(6)
+
+        tenji + vowel if vowel
       end
     end
 
-    def r
+    def r(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(5)
+
+        tenji + vowel if vowel
       end
     end
 
-    def y
+    def y(vowel = nil)
       Tenji.new.tap do |tenji|
         tenji.on(4)
+
+        if vowel
+          vowel.reverse!
+          tenji + vowel
+        end
       end
     end
 
-    def w
-      Tenji.new
+    def w(vowel = nil)
+      Tenji.new.tap do |tenji|
+        if vowel
+          vowel.reverse!
+          tenji + vowel
+        end
+      end
     end
 
-    # ん
+    # 「ん」は母音を受け付けない
     def nn
       Tenji.new.tap do |tenji|
         tenji.on(3)

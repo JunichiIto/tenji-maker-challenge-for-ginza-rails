@@ -6,6 +6,9 @@ require_relative '../../lib/tenji_builder/consonant'
 class ConsonantTest < Minitest::Test
   def setup
     @consonant = TenjiBuilder::Consonant.new
+    @vowel_a = Tenji.new.tap do |tenji|
+      tenji.on(1)
+    end
   end
 
   def test_k
@@ -56,5 +59,50 @@ class ConsonantTest < Minitest::Test
   def test_nn
     tenji_nn = @consonant.nn
     assert_equal [[0, 0], [0, 1], [1, 1]], tenji_nn.masu
+  end
+
+  def test_ka
+    tenji_ka = @consonant.k(@vowel_a)
+    assert_equal [[1, 0], [0, 0], [0, 1]], tenji_ka.masu
+  end
+
+  def test_sa
+    tenji_sa = @consonant.s(@vowel_a)
+    assert_equal [[1, 0], [0, 1], [0, 1]], tenji_sa.masu
+  end
+
+  def test_ta
+    tenji_ta = @consonant.t(@vowel_a)
+    assert_equal [[1, 0], [0, 1], [1, 0]], tenji_ta.masu
+  end
+
+  def test_na
+    tenji_na = @consonant.n(@vowel_a)
+    assert_equal [[1, 0], [0, 0], [1, 0]], tenji_na.masu
+  end
+
+  def test_ha
+    tenji_ha = @consonant.h(@vowel_a)
+    assert_equal [[1, 0], [0, 0], [1, 1]], tenji_ha.masu
+  end
+
+  def test_ma
+    tenji_ma = @consonant.m(@vowel_a)
+    assert_equal [[1, 0], [0, 1], [1, 1]], tenji_ma.masu
+  end
+
+  def test_ra
+    tenji_ra = @consonant.r(@vowel_a)
+    assert_equal [[1, 0], [0, 1], [0, 0]], tenji_ra.masu
+  end
+
+  def test_ya
+    tenji_ya = @consonant.y(@vowel_a)
+    assert_equal [[0, 1], [0, 0], [1, 0]], tenji_ya.masu
+  end
+
+  def test_wa
+    tenji_wa = @consonant.w(@vowel_a)
+    assert_equal [[0, 0], [0, 0], [1, 0]], tenji_wa.masu
   end
 end
