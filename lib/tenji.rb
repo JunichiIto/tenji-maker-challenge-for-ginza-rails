@@ -46,4 +46,9 @@ class Tenji
 
     self
   end
+
+  def reverse!
+    masu.reverse!
+    self
+  end
 end
