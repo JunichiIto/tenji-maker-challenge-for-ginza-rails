@@ -33,6 +33,8 @@ class TenjiMaker
     concated_masus.map { |masu| masu.join(MASU_SEP) }
   end
 
+  private
+
   def convert(char)
     # 子音はnilの場合もあるので、reverse して母音から取得する
     vowel, consonant = char.split(//).reverse

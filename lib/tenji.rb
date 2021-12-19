@@ -20,6 +20,8 @@ class Tenji
     6 => [2, 1]
   }.freeze
 
+  private_constant :INDEX_TABLE
+
   attr_reader :masu
 
   def initialize

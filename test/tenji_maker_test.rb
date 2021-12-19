@@ -65,18 +65,4 @@ class TenjiMakerTest < Minitest::Test
   # ここから上のテストは変更不可 =====================
 
   # 独自のテストパターンを追加するのは自由です
-  def test_convert_a
-    tenji_a = @tenji_maker.convert('A')
-    assert_equal [[1, 0], [0, 0], [0, 0]], tenji_a.masu
-  end
-
-  def test_convert_ka
-    tenji_ka = @tenji_maker.convert('KA')
-    assert_equal [[1, 0], [0, 0], [0, 1]], tenji_ka.masu
-  end
-
-  def test_convert_nn
-    tenji_nn = @tenji_maker.convert('N')
-    assert_equal [[0, 0], [0, 1], [1, 1]], tenji_nn.masu
-  end
 end
