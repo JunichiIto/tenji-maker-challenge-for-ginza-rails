@@ -5,12 +5,14 @@ class TenjiMaker
   TENJI_ON  = 'o'
   TENJI_OFF = '-'
 
+  # 引数の区切り文字
+  ARGS_SEP = ' '
   # 各マス結合時に間に挟む文字列
-  MASU_SEP  = ' '
-  private_constant :TENJI_ON, :TENJI_OFF, :MASU_SEP
+  MASU_SEP = ' '
+  private_constant :TENJI_ON, :TENJI_OFF, :ARGS_SEP, :MASU_SEP
 
   def to_tenji(text)
-    chars = text.split(' ')
+    chars = text.split(ARGS_SEP)
     tenjis = chars.map { |char| convert(char) }
     masus = concat(tenjis.map(&:masu))
     masus.join("\n")
