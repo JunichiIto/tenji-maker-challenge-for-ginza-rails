@@ -20,13 +20,15 @@ class Tenji
     6 => [2, 1]
   }.freeze
 
+  MASU_ROW_SIZE = 3
+
   private_constant :INDEX_TABLE
 
   attr_reader :masu
 
   def initialize
     # 初期状態では全て点なし
-    @masu = [[0, 0], [0, 0], [0, 0]]
+    @masu = Array.new(MASU_ROW_SIZE) { [0, 0] }
   end
 
   # 指定された番号を点(1)とする

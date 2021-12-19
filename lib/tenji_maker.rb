@@ -20,11 +20,10 @@ class TenjiMaker
 
   # 複数のマスを一つのマスに結合する
   def concat(masus)
-    concated_masus = []
+    concated_masus = Array.new(Tenji::MASU_ROW_SIZE) { [] }
 
     masus.each do |masu|
       masu.each_with_index do |line, index|
-        concated_masus[index] ||= []
         concated_masus[index] << line.map { |number| number.positive? ? TENJI_ON : TENJI_OFF }.join
       end
     end
