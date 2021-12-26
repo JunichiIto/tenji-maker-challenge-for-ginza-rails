@@ -63,4 +63,12 @@ class TenjiMakerTest < Minitest::Test
   # ここから上のテストは変更不可 =====================
 
   # 独自のテストパターンを追加するのは自由です
+  def test_re_n_ko_n
+    tenji = @tenji_maker.to_tenji('RE N KO N')
+    assert_equal <<~TENJI.chomp, tenji
+      oo -- -o --
+      oo -o o- -o
+      -- oo -o oo
+    TENJI
+  end
 end
