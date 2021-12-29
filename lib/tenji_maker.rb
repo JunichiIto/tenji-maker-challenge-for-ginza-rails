@@ -8,18 +8,16 @@ class TenjiMaker
   private_constant :TENJI_POINTS
 
   def to_tenji(text)
-    upper_points_position  = Upper.new(text).position
-    middle_points_position = Middle.new(text).position
-    lower_points_position  = Lower.new(text).position
-
-    [
-      tenji_format(upper_points_position),
-      tenji_format(middle_points_position),
-      tenji_format(lower_points_position),
-    ].join("\n")
+    tenji_build(Upper.new(text), Middle.new(text), Lower.new(text))
   end
 
   private
+
+  def tenji_build(*rows)
+    rows.map do |row|
+      tenji_format(row.position)
+    end.join("\n")
+  end
 
   def tenji_format(points_position)
     points_position.map do |position|
