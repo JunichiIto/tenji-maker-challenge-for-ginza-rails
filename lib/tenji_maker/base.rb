@@ -1,6 +1,6 @@
 class TenjiMaker
   class Base
-    attr_reader :text
+    private attr_reader :text
 
     def initialize(text)
       @text = text.split(" ")
