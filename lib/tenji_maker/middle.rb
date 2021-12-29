@@ -16,7 +16,7 @@ class TenjiMaker
           :right
         elsif left?(char)
           :left
-        elsif all?(char)
+        else
           :all
         end
       end
@@ -38,10 +38,6 @@ class TenjiMaker
 
     def left?(char)
       %w[I E O KI KE KO NI NE NO HI HE HO].include?(char)
-    end
-
-    def all?(char)
-      %w[SI SE SO TI TE TO MI ME MO RI RE RO].include?(char)
     end
   end
 end

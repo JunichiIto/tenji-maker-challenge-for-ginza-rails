@@ -16,7 +16,7 @@ class TenjiMaker
           :right
         elsif left?(char)
           :left
-        elsif all?(char)
+        else
           :all
         end
       end
@@ -38,10 +38,6 @@ class TenjiMaker
 
     def left?(char)
       char.end_with?("A", "I")
-    end
-
-    def all?(char)
-      char.end_with?("U", "E")
     end
   end
 end
