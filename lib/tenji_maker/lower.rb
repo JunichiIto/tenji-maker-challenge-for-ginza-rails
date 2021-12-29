@@ -8,18 +8,36 @@ class TenjiMaker
 
     def position
       text.map do |char|
-        next :all if char == "N"
+        next for_N if char == "N"
 
-        if char.start_with?("R") || char.length == 1
+        if none?(char)
           :none
-        elsif char.start_with?("K", "S")
+        elsif right?(char)
           :right
-        elsif char.start_with?("T", "N", "W", "Y") && char != "YU"
+        elsif left?(char)
           :left
         else
           :all
         end
       end
+    end
+
+    private
+
+    def for_N
+      :all
+    end
+
+    def none?(char)
+      char.start_with?("R") || char.length == 1
+    end
+
+    def right?(char)
+      char.start_with?("K", "S")
+    end
+
+    def left?(char)
+      char.start_with?("T", "N", "W", "Y") && char != "YU"
     end
   end
 end
