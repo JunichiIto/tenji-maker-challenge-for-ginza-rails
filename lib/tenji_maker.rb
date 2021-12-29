@@ -1,3 +1,4 @@
+require_relative './tenji_maker/base'
 require_relative './tenji_maker/upper'
 require_relative './tenji_maker/middle'
 require_relative './tenji_maker/lower'
