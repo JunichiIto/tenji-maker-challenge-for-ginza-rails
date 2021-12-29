@@ -7,15 +7,17 @@ class TenjiMaker
     end
 
     def none?(char)
-      %w[A U KA KU NA NU HA HU YA YU WA].include?(char)
+      char.start_with?("A", "U", "K", "N", "H", "Y", "W") && char.end_with?("A", "U")
     end
 
     def right?(char)
-      %w[SA SU TA TU MA MU RA RU YO WO].include?(char)
+      # 「WO」はここに該当するが対象外の為、含めていない
+      # 母音「O」は子音が「Y」の時だけ、ここに該当する
+      char == "YO" || (char.start_with?("S", "T", "M", "R") && char.end_with?("A", "U"))
     end
 
     def left?(char)
-      %w[I E O KI KE KO NI NE NO HI HE HO].include?(char)
+      char.start_with?("I", "E", "O", "K", "N", "H") && char.end_with?("I", "E", "O")
     end
   end
 end
