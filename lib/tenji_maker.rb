@@ -1,43 +1,27 @@
+require_relative './tenji_maker/base'
+require_relative './tenji_maker/upper'
+require_relative './tenji_maker/middle'
+require_relative './tenji_maker/lower'
+
 class TenjiMaker
+  TENJI_POINTS = { all: "oo", left: "o-", right: "-o", none: "--"}.freeze
+  private_constant :TENJI_POINTS
+
   def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
-    case text
-    when 'A HI RU'
-      <<~TENJI.chomp
-        o- o- oo
-        -- o- -o
-        -- oo --
-      TENJI
-    when 'KI RI N'
-      <<~TENJI.chomp
-        o- o- --
-        o- oo -o
-        -o -- oo
-      TENJI
-    when 'SI MA U MA'
-      <<~TENJI.chomp
-        o- o- oo o-
-        oo -o -- -o
-        -o oo -- oo
-      TENJI
-    when 'NI WA TO RI'
-      <<~TENJI.chomp
-        o- -- -o o-
-        o- -- oo oo
-        o- o- o- --
-      TENJI
-    when 'HI YO KO'
-      <<~TENJI.chomp
-        o- -o -o
-        o- -o o-
-        oo o- -o
-      TENJI
-    when 'KI TU NE'
-      <<~TENJI.chomp
-        o- oo oo
-        o- -o o-
-        -o o- o-
-      TENJI
-    end
+    tenji_build(Upper.new(text), Middle.new(text), Lower.new(text))
+  end
+
+  private
+
+  def tenji_build(*rows)
+    rows.map do |row|
+      tenji_format(row.position)
+    end.join("\n")
+  end
+
+  def tenji_format(points_position)
+    points_position.map do |position|
+      TENJI_POINTS[position]
+    end.join(" ")
   end
 end
