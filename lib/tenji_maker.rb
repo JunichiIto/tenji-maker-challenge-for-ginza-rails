@@ -22,11 +22,6 @@ class TenjiMaker
   end
 
   def numbers_to_tenji_array(numbers)
-    ten = ['-', '-', '-', '-', '-', '-']
-    numbers.each do |n|
-      ten[n-1] = 'o'
-    end
-    ten
     (1..6).map do |i|
       numbers.include?(i) ? 'o' : '-'
     end
