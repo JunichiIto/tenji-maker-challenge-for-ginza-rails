@@ -2,6 +2,24 @@ require 'minitest/autorun'
 require_relative '../lib/tenji_maker'
 
 class TenjiMakerTest < Minitest::Test
+  def test_ya_yu_yo
+    tenji = @tenji_maker.to_tenji('YA YU YO')
+    assert_equal <<~TENJI.chomp, tenji
+      -o -o -o
+      -- -- -o
+      o- oo o-
+    TENJI
+  end
+
+  def test_wa_wo_n
+    tenji = @tenji_maker.to_tenji('WA WO N')
+    assert_equal <<~TENJI.chomp, tenji
+      -- -- --
+      -- -o -o
+      o- o- oo
+    TENJI
+  end
+
   # ここから下のテストは変更不可 =====================
   def setup
     @tenji_maker = TenjiMaker.new
