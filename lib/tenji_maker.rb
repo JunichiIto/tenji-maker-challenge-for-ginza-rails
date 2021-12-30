@@ -2,17 +2,17 @@ class TenjiMaker
   TENJI_NUMBER_OF_ROWS = 3.freeze
 
   def to_tenji(text)
-    tenji_array = text.split(' ').map do |char|
-      consonant_vowel = devide(char)
+    tenji_array_list = text.split(' ').map do |char|
+      consonant_vowel = separate_c_and_v(char)
       tenji_numbers = romaji_to_numbers(consonant_vowel)
       numbers_to_tenji_array(tenji_numbers)
     end
-    to_str(tenji_array)
+    to_str(tenji_array_list)
   end
 
   private
 
-  def devide(romaji)
+  def separate_c_and_v(romaji)
     ['A', 'I', 'U', 'E', 'O'].each do |v|
       if (i = romaji.index(v))
         return [romaji[0...i], romaji[i]] # 母音の直前までが子音のはずだ
@@ -32,20 +32,20 @@ class TenjiMaker
     end
   end
 
-  def romaji_to_numbers(cv)
-    c = cv[0]
-    v = cv[1]
+  def romaji_to_numbers(consonant_vowel)
+    c = consonant_vowel[0]
+    v = consonant_vowel[1]
     if (c == 'Y' || c == 'W')
-      numbers = consonant_to_numbers(c) | vowel_to_numbers_ura(v)
+      numbers = consonant_to_numbers(c) | vowel_to_numbers_down(v)
     else
       numbers = consonant_to_numbers(c) | vowel_to_numbers(v)
     end
   end
 
-  def to_str(result)
+  def to_str(tenji_array_list)
     tmp = Array.new(TENJI_NUMBER_OF_ROWS){Array.new}
     TENJI_NUMBER_OF_ROWS.times do |i|
-      result.each do |arr|
+      tenji_array_list.each do |arr|
         tmp[i].push "#{arr[0+i]}#{arr[3+i]}"
         tmp[i].push ' '
       end
@@ -65,7 +65,7 @@ class TenjiMaker
     end
   end
 
-  def vowel_to_numbers_ura(v)
+  def vowel_to_numbers_down(v)
     case v
     in 'A' then [3]
     in 'I' then [2,3]
