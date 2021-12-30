@@ -3,9 +3,9 @@ class TenjiMaker
 
   def to_tenji(text)
     tenji_array_list = text.split(' ').map do |char|
-      consonant_vowel = separate_c_and_v(char)
-      tenji_numbers = romaji_to_numbers(consonant_vowel)
-      numbers_to_tenji_array(tenji_numbers)
+      consonant_vowel = separate_c_and_v(char) # 'KA' => ['K', 'A']
+      tenji_numbers = romaji_to_numbers(consonant_vowel) # ['K', 'A'] => [1, 6]
+      numbers_to_tenji_array(tenji_numbers) # [1, 6] => ['o', '-', '-', '-', '-', 'o']
     end
     to_str(tenji_array_list)
   end
