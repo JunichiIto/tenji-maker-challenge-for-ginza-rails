@@ -1,11 +1,11 @@
 class TenjiNumbersToString
-	TENJI_NUMBER_OF_ROWS = 3.freeze
+  TENJI_NUMBER_OF_ROWS = 3.freeze
 
-	def exec(tenji_numbers_list)
-		build_tenji(tenji_numbers_list)
-	end
+  def exec(tenji_numbers_list)
+    build_tenji(tenji_numbers_list)
+  end
 
-	private
+  private
 
   def build_tenji(tenji_numbers_list)
     tenji_array_list = tenji_numbers_list.map{|tn| numbers_to_tenji_array(tn) }
