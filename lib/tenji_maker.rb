@@ -3,10 +3,15 @@ require_relative './tenji_numbers_to_string'
 
 class TenjiMaker
   def to_tenji(text)
-    tenji_numbers_list = text.split(' ').map do |char|
-      tenji_numbers = romaji_to_numbers.exec(char) # 'KA' => [1, 6]
+    tenji_numbers_to_string.exec(tenji_numbers_list(text))
+  end
+
+  private
+
+  def tenji_numbers_list(text)
+    text.split(' ').map do |char|
+      romaji_to_numbers.exec(char) # 'KA' => [1, 6]
     end
-    tenji_numbers_to_string.exec(tenji_numbers_list)
   end
 
   def romaji_to_numbers
