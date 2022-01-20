@@ -16,7 +16,7 @@ class TenjiMaker
   def to_tenji(text)
     tenji_serials = text.split(' ').map { |romaji| make_tenji(romaji) }
     [0..1, 2..3, 4..5].map do |range|
-      tenji_serials.flatten.map { |tenji_serial| tenji_serial.slice(range) }.join(' ')
+      tenji_serials.flatten.map { |tenji_serial| tenji_serial[range] }.join(' ')
     end.join("\n")
   end
 
