@@ -21,7 +21,7 @@ class TenjiMaker
   end
 
   def make_tenji(romaji)
-    boin = make_tenji_3bit('xxxOAIUE', romaji.slice(-1))
+    boin = make_tenji_3bit('xxxOAIUE', romaji[-1])
     if romaji.length == 1
       case romaji
       when '-'        ; '--oo--'
@@ -30,10 +30,10 @@ class TenjiMaker
       end
     else
       case romaji
-      when /^[YW]/    ; ["#{make_tenji_3bit('WxYxxxxx', romaji.slice(0))}#{make_tenji_3bit('xxAUxxOx', romaji.slice(-1))}"]
-      when /[GZDB]/   ; ["#{boin}#{make_tenji_3bit('xGxBxZDx', romaji.slice(0))}"]
-      when /P/        ; ["#{boin}#{make_tenji_3bit('xxxPxxxx', romaji.slice(0))}"]
-      else            ; ["#{boin}#{make_tenji_3bit('xKNHRSTM', romaji.slice(0))}"]
+      when /^[YW]/    ; ["#{make_tenji_3bit('WxYxxxxx', romaji[0])}#{make_tenji_3bit('xxAUxxOx', romaji[-1])}"]
+      when /[GZDB]/   ; ["#{boin}#{make_tenji_3bit('xGxBxZDx', romaji[0])}"]
+      when /P/        ; ["#{boin}#{make_tenji_3bit('xxxPxxxx', romaji[0])}"]
+      else            ; ["#{boin}#{make_tenji_3bit('xKNHRSTM', romaji[0])}"]
       end.unshift(generate_tenji_option(romaji))
     end
   end
