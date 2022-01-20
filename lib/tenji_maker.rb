@@ -21,37 +21,33 @@ class TenjiMaker
   end
 
   def make_tenji(romaji)
-    tenji_sokuon = romaji =~ /(.)\1/ ? ['--o---'] : []
-    romaji.squeeze!('KSTNHMYRWGZDBP')
-
-    tenji_boin = make_tenji_3bit('xxxOAIUE', romaji.slice(-1))
-    shiin = romaji.slice(0)
-
-    case romaji.length
-    when 1
-      "#{make_tenji_3bit('N-xOAIUE', romaji)}#{romaji =~/[AIUEO]/ ? '---' : make_tenji_3bit('xxxx-xxN', romaji)}"
-    when 2
+    boin = make_tenji_3bit('xxxOAIUE', romaji.slice(-1))
+    if romaji.length == 1
       case romaji
-      when /[YW]+/
-        ["#{make_tenji_3bit('WxYxxxxx', shiin)}#{make_tenji_3bit('xxAUxxOx', romaji.slice(-1))}"]
-      when /[GZDB]+/
-        ['---o--', "#{tenji_boin}#{make_tenji_3bit('xGxBxZDx', shiin)}"]
-      when /P+/
-        ['-----o', "#{tenji_boin}-oo"]
-      else
-        ["#{tenji_boin}#{make_tenji_3bit('xKNHRSTM', shiin)}"]
-      end.unshift(tenji_sokuon)
-    when 3
+      when '-'        ; '--oo--'
+      when 'N'        ; '---ooo'
+      else            ; "#{boin}---"
+      end
+    else
       case romaji
-      when /[GZDB]Y+/
-        ['-o-o--', "#{tenji_boin}#{make_tenji_3bit('xGxBxZDx', shiin)}"]
-      when /PY+/
-        ['-o---o', "#{tenji_boin}-oo"]
-      else
-        ['-o----', "#{tenji_boin}#{make_tenji_3bit('xKNHRSTM', shiin)}"]
-      end.unshift(tenji_sokuon)
+      when /^[YW]/    ; ["#{make_tenji_3bit('WxYxxxxx', romaji.slice(0))}#{make_tenji_3bit('xxAUxxOx', romaji.slice(-1))}"]
+      when /[GZDB]/   ; ["#{boin}#{make_tenji_3bit('xGxBxZDx', romaji.slice(0))}"]
+      when /P/        ; ["#{boin}#{make_tenji_3bit('xxxPxxxx', romaji.slice(0))}"]
+      else            ; ["#{boin}#{make_tenji_3bit('xKNHRSTM', romaji.slice(0))}"]
+      end.unshift(generate_tenji_option(romaji))
     end
   end
 
   def make_tenji_3bit(target, char) = (target =~ /#{char}/).to_s.sub(/./, TENJI_3BIT_TABLE)
+
+  def generate_tenji_option(romaji)
+    case romaji
+    when /[GZDB]Y/    ; ['-o-o--']
+    when /[GZDB]/     ; ['---o--']
+    when /[P]Y/       ; ['-o---o']
+    when /[P]/        ; ['-----o']
+    when /[KSTNHMR]Y/ ; ['-o----']
+    else              ; []
+    end.unshift(romaji =~ /(.)\1/ ? ['--o---'] : [])
+  end
 end
