@@ -23,7 +23,6 @@ class TenjiMaker
   def make_tenji(romaji)
     if romaji.length == 1
       case romaji
-      when '-'     ; '--oo--'
       when 'N'     ; '---ooo'
       else         ; "#{make_tenji_3bit('xxxOAIUE', romaji)}---"
       end
