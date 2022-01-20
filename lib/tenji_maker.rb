@@ -21,33 +21,19 @@ class TenjiMaker
   end
 
   def make_tenji(romaji)
-    boin = make_tenji_3bit('xxxOAIUE', romaji.slice(-1))
     if romaji.length == 1
       case romaji
-      when '-'        ; '--oo--'
-      when 'N'        ; '---ooo'
-      else            ; "#{boin}---"
+      when '-'     ; '--oo--'
+      when 'N'     ; '---ooo'
+      else         ; "#{make_tenji_3bit('xxxOAIUE', romaji.slice(0))}---"
       end
     else
       case romaji
-      when /^[YW]/    ; ["#{make_tenji_3bit('WxYxxxxx', romaji.slice(0))}#{make_tenji_3bit('xxAUxxOx', romaji.slice(-1))}"]
-      when /[GZDB]/   ; ["#{boin}#{make_tenji_3bit('xGxBxZDx', romaji.slice(0))}"]
-      when /P/        ; ["#{boin}#{make_tenji_3bit('xxxPxxxx', romaji.slice(0))}"]
-      else            ; ["#{boin}#{make_tenji_3bit('xKNHRSTM', romaji.slice(0))}"]
-      end.unshift(generate_tenji_option(romaji))
+      when /^[YW]/ ; ["#{make_tenji_3bit('WxYxxxxx', romaji.slice(0))}#{make_tenji_3bit('xxAUxxOx', romaji.slice(1))}"]
+      else         ; ["#{make_tenji_3bit('xxxOAIUE', romaji.slice(1))}#{make_tenji_3bit('xKNHRSTM', romaji.slice(0))}"]
+      end
     end
   end
 
   def make_tenji_3bit(target, char) = (target =~ /#{char}/).to_s.sub(/./, TENJI_3BIT_TABLE)
-
-  def generate_tenji_option(romaji)
-    case romaji
-    when /[GZDB]Y/    ; ['-o-o--']
-    when /[GZDB]/     ; ['---o--']
-    when /[P]Y/       ; ['-o---o']
-    when /[P]/        ; ['-----o']
-    when /[KSTNHMR]Y/ ; ['-o----']
-    else              ; []
-    end.unshift(romaji =~ /(.)\1/ ? ['--o---'] : [])
-  end
 end
