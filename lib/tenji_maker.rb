@@ -16,7 +16,7 @@ class TenjiMaker
   def to_tenji(text)
     tenji_serials = text.split(' ').map { |romaji| make_tenji(romaji) }
     [0..1, 2..3, 4..5].map do |range|
-      tenji_serials.flatten.map { |tenji_serial| tenji_serial.slice(range) }.join(' ')
+      tenji_serials.map { |tenji_serial| tenji_serial.slice(range) }.join(' ')
     end.join("\n")
   end
 
@@ -25,12 +25,12 @@ class TenjiMaker
       case romaji
       when '-'     ; '--oo--'
       when 'N'     ; '---ooo'
-      else         ; "#{make_tenji_3bit('xxxOAIUE', romaji.slice(0))}---"
+      else         ; "#{make_tenji_3bit('xxxOAIUE', romaji)}---"
       end
     else
       case romaji
-      when /^[YW]/ ; ["#{make_tenji_3bit('WxYxxxxx', romaji.slice(0))}#{make_tenji_3bit('xxAUxxOx', romaji.slice(1))}"]
-      else         ; ["#{make_tenji_3bit('xxxOAIUE', romaji.slice(1))}#{make_tenji_3bit('xKNHRSTM', romaji.slice(0))}"]
+      when /^[YW]/ ; "#{make_tenji_3bit('WxYxxxxx', romaji.slice(0))}#{make_tenji_3bit('xxAUxxOx', romaji.slice(1))}"
+      else         ; "#{make_tenji_3bit('xxxOAIUE', romaji.slice(1))}#{make_tenji_3bit('xKNHRSTM', romaji.slice(0))}"
       end
     end
   end
