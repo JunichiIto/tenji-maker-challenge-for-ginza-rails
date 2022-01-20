@@ -28,8 +28,8 @@ class TenjiMaker
       end
     else
       case romaji
-      when /^[YW]/ ; "#{make_tenji_3bit('WxYxxxxx', romaji.slice(0))}#{make_tenji_3bit('xxAUxxOx', romaji.slice(1))}"
-      else         ; "#{make_tenji_3bit('xxxOAIUE', romaji.slice(1))}#{make_tenji_3bit('xKNHRSTM', romaji.slice(0))}"
+      when /^[YW]/ ; "#{make_tenji_3bit('WxYxxxxx', romaji[0])}#{make_tenji_3bit('xxAUxxOx', romaji[1])}"
+      else         ; "#{make_tenji_3bit('xxxOAIUE', romaji[1])}#{make_tenji_3bit('xKNHRSTM', romaji[0])}"
       end
     end
   end
