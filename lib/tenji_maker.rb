@@ -1,38 +1,43 @@
+require 'tenji_maker/text_to_romaji'
+
 class TenjiMaker
+  include TextToRomaji
+
   def to_tenji(text)
-    # 以下はサンプルの仮実装なので、このcase文は全部消して自作ロジックに書き直すこと
-    case text
-    when 'A HI RU'
+    romaji = text_to_romaji(text)
+
+    case romaji
+    when %w[A HI RU]
       <<~TENJI.chomp
         o- o- oo
         -- o- -o
         -- oo --
       TENJI
-    when 'KI RI N'
+    when %w[KI RI N]
       <<~TENJI.chomp
         o- o- --
         o- oo -o
         -o -- oo
       TENJI
-    when 'SI MA U MA'
+    when %w[SI MA U MA]
       <<~TENJI.chomp
         o- o- oo o-
         oo -o -- -o
         -o oo -- oo
       TENJI
-    when 'NI WA TO RI'
+    when %w[NI WA TO RI]
       <<~TENJI.chomp
         o- -- -o o-
         o- -- oo oo
         o- o- o- --
       TENJI
-    when 'HI YO KO'
+    when %w[HI YO KO]
       <<~TENJI.chomp
         o- -o -o
         o- -o o-
         oo o- -o
       TENJI
-    when 'KI TU NE'
+    when %w[KI TU NE]
       <<~TENJI.chomp
         o- oo oo
         o- -o o-
