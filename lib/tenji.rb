@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Tenji
   DAN = {
     'A' => 0b100000,
@@ -18,22 +20,89 @@ class Tenji
     'R' => 0b000100,
   }
 
+  HATSUON = 0b000111
+  CHO_ON = 0b001100
+  SOKUON = 0b001000
+
+  DAKUON = 0b000100
+  DAKUON_TABLE = {
+    'G' => 'K',
+    'Z' => 'S',
+    'D' => 'T',
+    'B' => 'H',
+  }
+
+  HANDAKUON = 0b000001
+  HANDAKUON_TABLE = {
+    'P' => 'H',
+  }
+
+  YO_ON = 0b010000
+  YODAKUON = YO_ON | DAKUON
+  YOHANDAKUON = YO_ON | HANDAKUON
+
   def initialize(romaji)
     @romaji = romaji
   end
 
-  def to_i
-    case @romaji.chars
-    in ['Y' => gyo, 'A' | 'U' => dan] then GYO[gyo] | (DAN[dan] >> 4)
-    in ['Y' => gyo, 'O' => dan]       then GYO[gyo] | (DAN[dan] >> 2)
-    in ['W', 'A' => dan]              then DAN[dan] >> 4
-    in [gyo, dan]                     then GYO[gyo] | DAN[dan]
-    in ['N']                          then 0b000111
-    in [dan]                          then DAN[dan]
+  def chars
+    bytes.map { |byte| render(byte) }
+  end
+
+  def bytes
+    convert(*@romaji.chars)
+  end
+
+  private
+
+  def convert(*chars)
+    case chars
+    # 促音
+    in [gyo, ^gyo, *rest]
+      body = convert(gyo, *rest)
+      [SOKUON, *body]
+
+    # 濁音、半濁音、拗音、拗濁音、拗半濁音
+    in ['G' | 'Z' | 'D' | 'B' => dakuon, dan]
+      body = convert(DAKUON_TABLE[dakuon], dan)
+      [DAKUON, *body]
+    in ['P' => handakuon, dan]
+      body = convert(HANDAKUON_TABLE[handakuon], dan)
+      [HANDAKUON, *body]
+    in ['K' | 'S' | 'T' | 'N' | 'H' | 'M' | 'R' => gyo, 'Y', dan]
+      body = convert(gyo, dan)
+      [YO_ON, *body]
+    in ['G' | 'Z' | 'D' | 'B' => dakuon, 'Y', dan]
+      body = convert(DAKUON_TABLE[dakuon], dan)
+      [YODAKUON, *body]
+    in ['P' => yohandakuon, 'Y', dan]
+      body = convert(HANDAKUON_TABLE[yohandakuon], dan)
+      [YOHANDAKUON, *body]
+
+    # 清音、その他
+    in ['Y' => gyo, 'A' | 'U' => dan]
+      [GYO[gyo] | (DAN[dan] >> 4)]
+    in ['Y' => gyo, 'O' => dan]
+      [GYO[gyo] | (DAN[dan] >> 2)]
+    in ['W', 'A' => dan]
+      [DAN[dan] >> 4]
+    in ['W', 'O' => dan]
+      [DAN[dan] >> 2]
+    in [gyo, dan]
+      [GYO[gyo] | DAN[dan]]
+    in ['N']
+      [HATSUON]
+    in ['-']
+      [CHO_ON]
+    in [dan]
+      [DAN[dan]]
     end
   end
 
-  def to_s
-    sprintf('%06b', to_i).tr('01', '-o').scan(/../).join("\n")
+  def render(byte)
+    sprintf('%06b', byte)
+      .tr('01', '-o')
+      .scan(/../)
+      .join("\n")
   end
 end

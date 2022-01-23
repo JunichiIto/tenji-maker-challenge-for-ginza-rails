@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'tenji'
 
 class TenjiMaker
@@ -10,7 +12,8 @@ class TenjiMaker
 
   def join(tenji_list)
     tenji_list
-      .map { |tenji| tenji.to_s.split("\n") }
+      .flat_map(&:chars)
+      .map { |tenji| tenji.split("\n") }
       .transpose
       .map { |row| row.join(' ') }
       .join("\n")
