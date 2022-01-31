@@ -1,4 +1,34 @@
 class RomajiToNumbers
+  CONSONANT_TO_NUMBERS = {
+    'K' => [6].freeze,
+    'S' => [5, 6].freeze,
+    'T' => [3, 5].freeze,
+    'N' => [3].freeze,
+    'H' => [3, 6].freeze,
+    'M' => [3, 5, 6].freeze,
+    'Y' => [4].freeze,
+    'R' => [5].freeze,
+    'W' => [].freeze,
+    ''  => [].freeze,
+  }.freeze
+
+  VOWEL_TO_NUMBERS = {
+    'A' => [1].freeze,
+    'I' => [1, 2].freeze,
+    'U' => [1, 4].freeze,
+    'E' => [1, 2, 4].freeze,
+    'O' => [2, 4].freeze,
+    'N' => [3, 5, 6].freeze,
+  }.freeze
+
+  VOWEL_TO_NUMBERS_DOWN = {
+    'A' => [3].freeze,
+    'I' => [2, 3].freeze,
+    'U' => [3, 6].freeze,
+    'E' => [2, 3, 5].freeze,
+    'O' => [3, 5].freeze,
+  }.freeze
+
   def exec(char)
     consonant_vowel = separate_c_and_v(char) # 'KA' => ['K', 'A']
     romaji_to_numbers(consonant_vowel) # ['K', 'A'] => [1, 6]
@@ -19,45 +49,9 @@ class RomajiToNumbers
     c = consonant_vowel[0]
     v = consonant_vowel[1]
     if (c == 'Y' || c == 'W')
-      numbers = consonant_to_numbers(c) | vowel_to_numbers_down(v)
+      numbers = CONSONANT_TO_NUMBERS[c] | VOWEL_TO_NUMBERS_DOWN[v]
     else
-      numbers = consonant_to_numbers(c) | vowel_to_numbers(v)
-    end
-  end
-
-  def vowel_to_numbers(v)
-    case v
-    in 'A' then [1]
-    in 'I' then [1,2]
-    in 'U' then [1,4]
-    in 'E' then [1,2,4]
-    in 'O' then [2,4]
-    in 'N' then [3,5,6]
-    end
-  end
-
-  def vowel_to_numbers_down(v)
-    case v
-    in 'A' then [3]
-    in 'I' then [2,3]
-    in 'U' then [3,6]
-    in 'E' then [2,3,5]
-    in 'O' then [3,5]
-    end
-  end
-
-  def consonant_to_numbers(c)
-    case c
-    in 'K' then [6]
-    in 'S' then [5,6]
-    in 'T' then [3,5]
-    in 'N' then [3]
-    in 'H' then [3,6]
-    in 'M' then [3,5,6]
-    in 'Y' then [4]
-    in 'R' then [5]
-    in 'W' then []
-    in ''  then []
+      numbers = CONSONANT_TO_NUMBERS[c] | VOWEL_TO_NUMBERS[v]
     end
   end
 end
