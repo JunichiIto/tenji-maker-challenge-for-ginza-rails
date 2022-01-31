@@ -29,29 +29,31 @@ class RomajiToNumbers
     'O' => [3, 5].freeze,
   }.freeze
 
-  def exec(char)
-    consonant_vowel = separate_c_and_v(char) # 'KA' => ['K', 'A']
-    romaji_to_numbers(consonant_vowel) # ['K', 'A'] => [1, 6]
-  end
-
-  private
-
-  def separate_c_and_v(romaji)
-    ['A', 'I', 'U', 'E', 'O'].each do |v|
-      if (i = romaji.index(v))
-        return [romaji[0...i], romaji[i]] # 母音の直前までが子音のはずだ
-      end
+  class << self
+    def exec(char)
+      consonant_vowel = separate_c_and_v(char) # 'KA' => ['K', 'A']
+      romaji_to_numbers(consonant_vowel) # ['K', 'A'] => [1, 6]
     end
-    ['', romaji] # あ行, ん
-  end
 
-  def romaji_to_numbers(consonant_vowel)
-    c = consonant_vowel[0]
-    v = consonant_vowel[1]
-    if (c == 'Y' || c == 'W')
-      numbers = CONSONANT_TO_NUMBERS[c] | VOWEL_TO_NUMBERS_DOWN[v]
-    else
-      numbers = CONSONANT_TO_NUMBERS[c] | VOWEL_TO_NUMBERS[v]
+    private
+
+    def separate_c_and_v(romaji)
+      ['A', 'I', 'U', 'E', 'O'].each do |v|
+        if (i = romaji.index(v))
+          return [romaji[0...i], romaji[i]] # 母音の直前までが子音のはずだ
+        end
+      end
+      ['', romaji] # あ行, ん
+    end
+
+    def romaji_to_numbers(consonant_vowel)
+      c = consonant_vowel[0]
+      v = consonant_vowel[1]
+      if (c == 'Y' || c == 'W')
+        numbers = CONSONANT_TO_NUMBERS[c] | VOWEL_TO_NUMBERS_DOWN[v]
+      else
+        numbers = CONSONANT_TO_NUMBERS[c] | VOWEL_TO_NUMBERS[v]
+      end
     end
   end
 end
