@@ -3,12 +3,6 @@ class TenjiNumbersToString
 
   class << self
     def exec(tenji_numbers_list)
-      build_tenji(tenji_numbers_list)
-    end
-
-    private
-
-    def build_tenji(tenji_numbers_list)
       tenji_array_list = tenji_numbers_list.map{|tn| numbers_to_tenji_array(tn) }
       tmp = Array.new(TENJI_NUMBER_OF_ROWS){ Array.new }
       TENJI_NUMBER_OF_ROWS.times do |i|
@@ -20,6 +14,8 @@ class TenjiNumbersToString
       end
       "#{tmp[0].join}\n#{tmp[1].join}\n#{tmp[2].join}"
     end
+
+    private
 
     def numbers_to_tenji_array(numbers)
       (1..6).map do |i|
